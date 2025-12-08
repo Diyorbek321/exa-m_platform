@@ -1,0 +1,31 @@
+Create a fully functional online exam platform web app in Python using Flask, SQLite for the database, pandas for Excel imports, and Bootstrap 5 via CDN for responsive styling. Structure the project with separate files: app.py (main app), db.py (database helpers), templates/ folder with Jinja2 HTML files, and static/ for any CSS/JS if needed. Ensure it runs in Replit with no extra setup beyond installing flask, sqlite3, pandas, werkzeug via the package manager. Initialize the database on first run. Make code simple, well-commented, and easy to modify (e.g., add features like more question types).
+
+Core features:
+
+- Database schema (in db.py):
+  - users: id (PK), username (unique), password (hashed), role ('admin'/'student'), expiration (ISO datetime string for access end).
+  - subjects: id (PK), name (unique, e.g., 'Mathematics').
+  - quizzes: id (PK), subject_id (FK to subjects), name (quiz title), description.
+  - questions: id (PK), quiz_id (FK to quizzes), text, option1, option2, option3, option4, correct ('option1' etc.).
+
+- Authentication: Login page at root (/). Use Flask sessions and werkzeug for password hashing. Auto-create default admin (username: 'admin', password: 'adminpass'). Redirect to admin or student dashboard based on role. Logout route.
+
+- Admin features (protected routes):
+  - Dashboard: List subjects, quizzes, students.
+  - Add/edit/delete subjects: Simple forms.
+  - Add quizzes to subjects: Form with name, description.
+  - List quizzes per subject with edit/delete.
+  - Add questions to quizzes: Manual form (select quiz, enter text/options/correct).
+  - Import questions via Excel: Upload .xlsx (columns: text, option1, option2, option3, option4, correct), select quiz, use pandas to parse and insert.
+  - Add students: Form for username, password, initial access hours (calculate expiration = now + hours).
+  - List students: Show expiration, form to extend access by adding hours.
+  - Error handling with Flask flash messages.
+
+- Student features (protected, check expiration on every load):
+  - If expired, show message and logout.
+  - Dashboard: List subjects and their quizzes.
+  - Select quiz and exam type (20, 25, or 50 questions).
+  - Exam: Randomly pick questions from quiz (handle if not enough). Show one question at a time with radio options, track answers in session.
+  - Results: After submit, show score, percentage, table of questions with user answer vs correct.
+
+- General: Use Bootstrap for forms/tables. Secure uploads to 'uploads/' folder. Handle all CRUD operations safely. Include README.md with run instructions (e.g., 'flask run --host=0.0.0.0 --port=8080').
