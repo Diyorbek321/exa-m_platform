@@ -130,8 +130,8 @@ export default function LoginPage() {
           </Form>
           
           <div className="mt-6 text-center text-sm text-muted-foreground">
-            <p>Default admin credentials:</p>
-            <p className="font-mono text-xs mt-1">admin / adminpass</p>
+            <p>To get access please contact </p>
+            <p className="font-mono text-xs mt-1">@innovatexuz</p>
           </div>
         </CardContent>
       </Card>
